@@ -110,3 +110,38 @@ def L2_loss(x, y, w, b, alpha, use_type='cpu'):
         raise NotImplemented
 
     return y_hat, loss, dw, db
+
+
+def entropy(x,use_type='cpu'):
+    if use_type=='cpu':
+        probs = [list(x).count(i) / len(x) for i in set(x)]
+        return sum([prob*np.log2(prob) for prob in probs])
+    elif use_type=='gpu':
+        probs = [list(x).count(i) / len(x.get()) for i in set(x.get())]
+        return sum([prob*cp.log2(prob) for prob in probs]).tolist()
+    else:
+        raise NotImplemented
+
+
+def calc_gini(x,use_type='cpu'):
+    if use_type=='cpu':
+        probs = [list(x).count(i) / len(x) for i in np.unique(x)]
+        return sum([p*(1-p) for p in probs])
+    elif use_type=='gpu':
+        probs = [list(x).count(i) / len(x.get()) for i in cp.unique(x)]
+        return sum([p*(1-p) for p in probs])
+    else:
+        raise NotImplemented
+
+
+if __name__=='__main__':
+    test_=np.array([0.1,0.2,0.3])
+    print(entropy(test_))
+
+    test_2=cp.array([0.1,0.2,0.3])
+    print(entropy(test_2,'gpu'))
+
+
+    print(gini(test_))
+    print(gini(test_2,'gpu'))
+
