@@ -13,9 +13,6 @@ class TreeNode(object):
         self.right_branch = right_branch
 
 
-
-
-
 class BinaryDecisionTree(BaseClass):
     def __init__(self, min_samples_split=3, min_gini_impurity=999, max_depth=float('inf'), loss=None):
         self.root = None
@@ -94,5 +91,56 @@ class BinaryDecisionTree(BaseClass):
         return y_pred
 
 
+class DecisionStump:
+    def __init__(self):
+        self.label = 1
+        self.feature_index = None
+        self.threshold = None
+        self.alpha = None
+    #
+    # def train(self, x, y, n_estimators):
+    #     m, n = x.shape
+    #     w = np.full(m, (1 / m))
+    #     estimators = []
+    #     for _ in range(n_estimators):
+    #         estimator = DecisionStump(self)
+    #         min_error = float('inf')
+    #         for i in range(n):
+    #             values = np.exapnd_dims(x[:, i], axis=1)
+    #             unique_values = np.unique(values)
+    #             for threshold in unique_values:
+    #                 p = 1
+    #                 pred = np.ones(np.shape(y))
+    #                 pred[x[:, i] < threshold] = -1
+    #                 error = sum(w[y != pred])
+    #                 if error > 0.5:
+    #                     error = 1 - error
+    #                     p = -1
+    #                 if error < min_error:
+    #                     estimator.label = p
+    #                     estimator.threshold = threshold
+    #                     estimator.feature_index = i
+    #                     min_error = error
+    #         estimator.alpha = 0.5 * np.log((1.0 - min_error) / (min_error + 1e-9))
+    #         preds = np.ones(np.shap(y))
+    #         negative_idx = (estimator.label * x[:, estimator.feature_index] < estimator.label * estimator.threshold)
+    #         preds[negative_idx] = -1
+    #         w *= np.exp(-estimator.alpha * y * pred)
+    #         w /= np.sum(w)
+    #         estimators.append(estimator)
+    #
+    # def predict(selfx, estimators):
+    #     m = len(x)
+    #     y_pred = np.zeros((m, 1))
+    #     for estimator in estimators:
+    #         predictions = np.ones(np.shape(y_pred))
+    #         negative_idx = (estimator.label * x[:, estimator.feature_index] < estimator.label * estimator.threshold)
+    #         predictions[negative_idx]=-1
+    #         y_pred+=estimator.alpha*predictions
+    #     y_pred=np.sign(y_pred).flatten()
+    #     return y_pred
+
+
 if __name__ == '__main__':
     tree = TreeNode()
+    tree2 = DecisionStump()

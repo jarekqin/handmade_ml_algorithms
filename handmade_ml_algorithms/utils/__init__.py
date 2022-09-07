@@ -12,3 +12,9 @@ def feature_split(X, feature_i, threshold):
     X_right = np.array([sample for sample in X if not split_func(sample)])
 
     return np.array([X_left, X_right])
+
+def linear_kernel(x1,x2):
+    return np.dot(x1,x2)
+
+def gaussian_kernel(x1,x2,sigma=5.0):
+    return np.exp(-1*np.linalg.norm(x1-x2)**2/(2*(sigma**2)))
