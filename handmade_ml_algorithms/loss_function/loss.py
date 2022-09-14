@@ -134,6 +134,13 @@ def calc_gini(x,use_type='cpu'):
         raise NotImplemented
 
 
+def square_loss(y,y_pred):
+    return 0.5*np.power((y-y_pred),2)
+
+def negative_gradient(y,y_pred):
+    return -(y-y_pred)
+
+
 if __name__=='__main__':
     test_=np.array([0.1,0.2,0.3])
     print(entropy(test_))

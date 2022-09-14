@@ -18,3 +18,7 @@ def linear_kernel(x1,x2):
 
 def gaussian_kernel(x1,x2,sigma=5.0):
     return np.exp(-1*np.linalg.norm(x1-x2)**2/(2*(sigma**2)))
+
+
+def data_shuffle(data,labels):
+    return np.random.permutation(data),np.random.permutation(labels)
