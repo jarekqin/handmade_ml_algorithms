@@ -1,8 +1,6 @@
 from handmade_ml_algorithms.utils import feature_split
 from handmade_ml_algorithms.basic_class import BaseClass
 
-from handmade_ml_algorithms.loss_function.loss import negative_gradient,square_loss
-
 import numpy as np
 
 
@@ -13,6 +11,9 @@ class TreeNode(object):
         self.leaf_value = leaf_value
         self.left_branch = left_branch
         self.right_branch = right_branch
+
+
+
 
 
 class BinaryDecisionTree(BaseClass):
@@ -90,46 +91,6 @@ class BinaryDecisionTree(BaseClass):
 
     def predict(self, x, params=None):
         y_pred = [self.predict_value(sample) for sample in x]
-        return y_pred
-
-
-class GBDTBasic(BaseClass):
-    def __init__(self, n_estimators, learning_rate, min_samples_split, min_gini_impurity,
-                 max_depth, regression,CARTRegressionTree):
-        self.n_estimators = n_estimators
-        self.learning_rate = learning_rate
-        self.min_samples_split = min_samples_split
-        self.min_gini_impurity = min_gini_impurity
-        self.max_depth=max_depth
-        self.regression=regression
-        self.loss={'loss_function':square_loss,'negative_gradient':negative_gradient}
-
-        if not self.regression:
-            self.loss['loss_function']=None
-        self.n_estimators=[]
-
-        if CARTRegressionTree is not None and self.regression is False:
-            for i in range(self.n_estimators):
-                self.estimators.append(CARTRegressionTree(min_samples_split=self.min_samples_split,
-                                                          min_gini_impurity=self.min_gini_impurity,
-                                                          max_depth=self.max_depth
-                                                          ))
-
-    def train(self,x,y):
-        self.n_estimators[0].train(x,y)
-        y_pred=self.n_estimators[0].predict(x)
-        for i in range(1,self.n_estimators):
-            gradient=self.loss['negative_gradient'](y,y_pred)
-            self.n_estimators[i].train(x,gradient)
-            y_pred-=np.multiply(self.learning_rate,self.n_estimators[i].predict(x))
-
-    def predict(self,x,params=None):
-        y_pred=self.n_estimators[0].predict(x)
-        for i in range(1,self.n_estimators):
-            y_pred-=np.multiply(self.learning_rate,self.n_estimators[i].predict(x))
-        if not self.regression:
-            y_pred=np.exp(y_pred)/np.exapnd_dims(np.sum(np.exp(y_pred),axis=1),axis=1)
-            y_pred=np.argmax(y_pred,axis=1)
         return y_pred
 
 
