@@ -18,3 +18,17 @@ def linear_kernel(x1,x2):
 
 def gaussian_kernel(x1,x2,sigma=5.0):
     return np.exp(-1*np.linalg.norm(x1-x2)**2/(2*(sigma**2)))
+
+
+def boostrap_sample(x,y,n_estimators):
+    x_y=np.concatenate([x,y.reshape(-1,1)],axis=1)
+    np.random.shuffle(x_y)
+    n_samples=x.shape[0]
+    sampling_subsets=[]
+    for _ in range(n_estimators):
+        idx1=np.random.choice(n_samples,n_samples,replace=True)
+        boostrap_xy=x_y[idx1,:]
+        boostrap_x=boostrap_xy[:,:-1]
+        boostrap_y=boostrap_xy[:,-1]
+        sampling_subsets.append([boostrap_x,boostrap_y])
+    return sampling_subsets

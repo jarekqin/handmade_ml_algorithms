@@ -91,9 +91,9 @@ if __name__ == '__main__':
     # cuda version
     from cuml.neighbors import KNeighborsClassifier
     neigh=KNeighborsClassifier(num_neighbors=10)
-    neigh.fit(x_train,y_train)
-    y_pred=neigh.predict(x_test)
-    y_pred=y_pred.reshape((-1,1))
+    neigh.fit(cp.asarray(x_train).astype(cp.float32),cp.asarray(y_train).astype(cp.float32))
+    y_pred=neigh.predict(cp.asarray(x_test).astype(cp.float32))
+    y_pred=y_pred.get().reshape((-1,1))
     print(float(np.sum(y_pred==y_test))/x_test.shape[0])
     print('*' * 100)
 
