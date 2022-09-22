@@ -32,3 +32,11 @@ def boostrap_sample(x,y,n_estimators):
         boostrap_y=boostrap_xy[:,-1]
         sampling_subsets.append([boostrap_x,boostrap_y])
     return sampling_subsets
+
+
+def euclidean_distance(x,y):
+    distance=0
+    for i in range(len(x)):
+        distance+=pow(x[i]-y[i],2)
+    return np.sqrt(distance)
+
