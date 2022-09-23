@@ -40,3 +40,5 @@ def euclidean_distance(x,y):
         distance+=pow(x[i]-y[i],2)
     return np.sqrt(distance)
 
+
+

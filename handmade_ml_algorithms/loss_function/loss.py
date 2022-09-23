@@ -149,6 +149,3 @@ if __name__=='__main__':
     print(entropy(test_2,'gpu'))
 
 
-    print(gini(test_))
-    print(gini(test_2,'gpu'))
-
